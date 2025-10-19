@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Lab 1",
+      title: 'Lab 1',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.amberAccent),
         useMaterial3: true,
@@ -36,16 +36,16 @@ class _InteractiveCounterPageState extends State<InteractiveCounterPage> {
     final input = _controller.text.trim();
 
     setState(() {
-      if (input.toLowerCase() == "reset") {
+      if (input.toLowerCase() == 'reset') {
         _counter = 0;
-        _message = "Counter has been reset!";
+        _message = 'Counter has been reset!';
       } else if (int.tryParse(input) != null) {
         _counter += int.parse((input));
         _message = 'Added $input to the counter!';
       } else if (input.isEmpty) {
-        _message = "Try to enter anything.";
+        _message = 'Try to enter anything.';
       } else {
-        _message = "Not a valid number!";
+        _message = 'Not a valid number!';
       }
       _controller.clear();
     });
@@ -55,11 +55,11 @@ class _InteractiveCounterPageState extends State<InteractiveCounterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Lab 1 - Interactive Counter"),
+        title: const Text('Lab 1 - Interactive Counter'),
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -80,8 +80,8 @@ class _InteractiveCounterPageState extends State<InteractiveCounterPage> {
                 controller: _controller,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: "Enter number or command",
-                  hintText: "Try 59824 or reset",
+                  labelText: 'Enter number or command',
+                  hintText: 'Try 59824 or reset',
                 ),
                 onSubmitted: (_) => _processInput(),
               ),
@@ -95,9 +95,9 @@ class _InteractiveCounterPageState extends State<InteractiveCounterPage> {
               Text(
                 _message,
                 style: TextStyle(
-                  color: _message.contains("Not a")
+                  color: _message.contains('Not a')
                       ? Colors.red
-                      : _message.contains("reset")
+                      : _message.contains('reset')
                       ? Colors.purple
                       : Colors.green,
                   fontSize: 16,

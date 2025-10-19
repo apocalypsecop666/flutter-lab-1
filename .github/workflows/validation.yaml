@@ -1,0 +1,27 @@
+name: Flutter Validation
+
+on: 
+  pull_request:
+    paths:
+      - '**.dart'
+
+jobs:
+  analyza-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "stable"
+
+      - name: Flutter Pub Get
+        run: flutter pub Get
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Run Tests
+        run: flutter test
