@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,6 +32,7 @@ class _InteractiveCounterPageState extends State<InteractiveCounterPage> {
   int _counter = 0;
   final TextEditingController _controller = TextEditingController();
   String _message = '';
+  Color _counterColor = Colors.teal;
 
   void _processInput() {
     final input = _controller.text.trim();
@@ -39,6 +41,10 @@ class _InteractiveCounterPageState extends State<InteractiveCounterPage> {
       if (input.toLowerCase() == 'reset') {
         _counter = 0;
         _message = 'Counter has been reset!';
+      } else if (input.toLowerCase() == 'voodoo') {
+        int random = Random().nextInt(25) + 1;
+        _counter += random;
+        _message = 'Voodoo magic! Added $random';
       } else if (int.tryParse(input) != null) {
         _counter += int.parse((input));
         _message = 'Added $input to the counter!';
@@ -47,6 +53,23 @@ class _InteractiveCounterPageState extends State<InteractiveCounterPage> {
       } else {
         _message = 'Not a valid number!';
       }
+
+      _counterColor = _counter < 0 ? Colors.red : Colors.yellow;
+      _controller.clear();
+    });
+  }
+
+  void _subtract() {
+    setState(() {
+      if (_controller.text.trim().isEmpty ||
+          int.tryParse(_controller.text) == null) {
+        _message = 'Enter a valid number to subtract!';
+      } else {
+        int value = int.parse(_controller.text.trim());
+        _counter -= value;
+        _message = 'Subtracted $value!';
+      }
+      _counterColor = _counter < 0 ? Colors.red : Colors.yellow;
       _controller.clear();
     });
   }
@@ -81,15 +104,26 @@ class _InteractiveCounterPageState extends State<InteractiveCounterPage> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Enter number or command',
-                  hintText: 'Try 59824 or reset',
+                  hintText: 'Try 59824 or reset, or voodoo',
                 ),
                 onSubmitted: (_) => _processInput(),
               ),
               const SizedBox(height: 10),
-              ElevatedButton.icon(
-                onPressed: _processInput,
-                icon: const Icon(Icons.arrow_downward_sharp),
-                label: const Text('Enter'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: _processInput,
+                    icon: const Icon(Icons.add_circle_sharp),
+                    label: const Text('Add'),
+                  ),
+                  const SizedBox(width: 10),
+                  ElevatedButton.icon(
+                    onPressed: _subtract,
+                    icon: const Icon(Icons.remove_circle_sharp),
+                    label: const Text('Subtract'),
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
               Text(
